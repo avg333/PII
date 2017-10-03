@@ -6,110 +6,52 @@ import java.util.GregorianCalendar;
 public class Calendario {
 
 	public static void main(String[] args) {
+		
 		//DECLARAMOS VARIABLES Y RECOGEMOS DATOS
 
-		int dia1=Integer.parseInt(args[0]);
-		int dia2=Integer.parseInt(args[3]);
-		int mes1=Integer.parseInt(args[1]);
-		int mes2=Integer.parseInt(args[4]);
-		int anho1=Integer.parseInt(args[2]);
-		int anho2=Integer.parseInt(args[5]);
+		int dia1=Integer.parseInt(args[0]),   dia2=Integer.parseInt(args[3]);
+		int mes1=Integer.parseInt(args[1])-1, mes2=Integer.parseInt(args[4])-1;
+		int anho1=Integer.parseInt(args[2]), anho2=Integer.parseInt(args[5]);
+		
+		float trimestres;
+		int semanas, diashab;
 
-		Calendar fecha1 = Calendar.getInstance();
-		Calendar fecha2 = Calendar.getInstance();
-
+		Calendar fecha1 = new GregorianCalendar(), fecha2 = new GregorianCalendar();
+		
+		fecha1.setLenient(false);
+		fecha2.setLenient(false);
+		
 		fecha1.set(anho1,mes1,dia1);
 		fecha2.set(anho2,mes2,dia2);
 
 		//MOSTRAMOS LOS DATOS RECOGIDOS
 
-		System.out.println("ANYO: " + fecha1.get(Calendar.YEAR));
-		System.out.println("MES: " + fecha1.get(Calendar.MONTH));
-		System.out.println("DIA: " + fecha1.get(Calendar.DATE));
+		System.out.println("AÑO: " + fecha1.get(Calendar.YEAR) +
+				" MES: " + (fecha1.get(Calendar.MONTH)+1) +
+				" DIA: " + fecha1.get(Calendar.DATE));
 
-		System.out.println("ANYO: " + fecha2.get(Calendar.YEAR));
-		System.out.println("MES: " + fecha2.get(Calendar.MONTH));
-		System.out.println("DIA: " + fecha2.get(Calendar.DATE));
+		System.out.println("AÑO: " + fecha2.get(Calendar.YEAR) + 
+				" MES: " + (fecha2.get(Calendar.MONTH)+1) +
+				" DIA: " + fecha2.get(Calendar.DATE));
 		
-		System.out.println(fecha1.getTime());
-
 		//VERIFICAMOS SI SON CORRECTOS LOS DATOS
-		if (mes1<0||mes1>11||mes2<0||mes2>11)
-			System.out.println("MES INVALIDO");
-		else if (dia1<1||dia1>31||dia2<1||dia2>31)
-			System.out.println("DIA INVALIDO");
-		else if (mes1<0||mes1>11||mes2<0||mes2>11)
-			System.out.println("MES INVALIDO");
-		else {
-			if (mes1==1)
-				if (dia1>28)
-					System.out.println("DIA INVALIDO");
-			else if (mes2==1)
-				if (dia2>28)
-					System.out.println("DIA INVALIDO");
-			else 
-			System.out.println("FECHAS VALIDAS");
+		
+		
+		//BUSCAMOS CUAL ES LA MENOR Y COMPARAMOS
+		
+		if(fecha1.before(fecha2)) {
+			System.out.println("La fecha 1 es anterior a la 2");
+			trimestres=((fecha2.getTime().getTime() - fecha1.getTime().getTime())/1000/60/60/24/90);
 		}
-
-// Calendario Gregoriano -- 365/366 días por año, años bisiestos, etc
-
-// Método add -- Sumar o restar horas, días, meses, años, etc
-
-Calendar hoy = GregorianCalendar.getInstance();
-
-hoy.add(Calendar.DATE, 3);
-
-hoy.add(Calendar.MONTH, 2);
-
-System.out.println(hoy.getTime());
-
-// Restar 5 años y 50 días
-
-Calendar today = GregorianCalendar.getInstance();
-
-today.add(Calendar.YEAR, -5);
-
-today.add(Calendar.DATE, -50);
-
-System.out.println(today.getTime());
-
-// Partimos ahora del 10 de noviembre de 1998 a las 7:00am.
-
-Calendar cal = GregorianCalendar.getInstance();
-
-cal.set(1998,10,10,7,0,0);
-
-cal.add(Calendar.SECOND,52);
-
-cal.add(Calendar.HOUR, 2);
-
-cal.add(Calendar.MONTH, -3);
-
-cal.add(Calendar.YEAR,1);
-
-// Sumamos a la fecha 70 minutos y 22 días;
-
-cal.set(1998,10,10,7,0,0);
-
-cal.add(Calendar.MINUTE, 70);
-
-cal.add(Calendar.DATE, 22);
-
-// Así la fecha sería 1998/12/2 08:10:00 (2 de Diciembre de 1998)
-
-System.out.println(cal.getTime());
-
-/* Método roll(CONSTATE, valor)
-
-Funcionamiento similar a add() excepto por que no modifica ningún otro atributo, es decir, cuando el atributo dado por CONSTANTE llega a su límite inferior o superior cambia al límite contrario pero sin modificar sus atributos siguientes. Si en el ejemplo anterior en vez de add() usamos roll() ya no obtendremos 2 de Diciembre de 1998 a las 8:10 am, sino 2 de Noviembre de 1998 a las 7:10 am. Sólo cambian los valores que se especifican directamente.
-*/
-
-cal.set(1998,10,10,7,0,0);
-
-cal.roll(Calendar.MINUTE, 70);
-
-cal.roll(Calendar.DATE, 22);
-
-
-}
+		
+		else {
+			System.out.println("La fecha 2 es anterior a la 1");
+			trimestres=((fecha1.getTime().getTime() - fecha2.getTime().getTime())/1000/60/60/24/90);
+		}
+		
+		//MOSTRAMOS LOS DATOS QUE NOS PIDEN
+		System.out.println("El número de trimestres entre las fechas es: " + String.format("%1.2f",trimestres));
+		System.out.println("El número de días hábiles entre las fechas es: ");
+		System.out.println("El número de semanas completas entre las fechas es: ");
+	}
 }
