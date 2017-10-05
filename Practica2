@@ -5,16 +5,18 @@ import java.util.Scanner;
 
 import javax.swing.SortingFocusTraversalPolicy;
 
-public class ReferenciaCatastral {
 	
+	private static Scanner entradaEscaner;
+
 	public static void main(String[] args) {
 		
 		//SOLICITAMOS Y RECOGEMOS LA REFERENCIA CATASTRAL
 		
 		String entradaTeclado;
 		System.out.println("Introduzca la referencia castral: ");
-		Scanner entradaEscaner = new Scanner (System.in);
+		entradaEscaner = new Scanner (System.in);
         entradaTeclado = entradaEscaner.nextLine ();
+        
         
         //DIVIDIMOS LA REFERENCIA CATASTRAL EN SUS APARTADOS
         char[] cadenaTeclado = entradaTeclado.toCharArray();
