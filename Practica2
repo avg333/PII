@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import javax.swing.SortingFocusTraversalPolicy;
 
+public class ReferenciaCatastral {
 	
 	private static Scanner entradaEscaner;
 
@@ -17,6 +18,10 @@ import javax.swing.SortingFocusTraversalPolicy;
 		entradaEscaner = new Scanner (System.in);
         entradaTeclado = entradaEscaner.nextLine ();
         
+        //SI LA LONGITUD ES INCORRECTA AVISAMOS Y SALIMOS
+        if (entradaTeclado.length()!=20) {
+        	System.out.println("La referencia catastral tiene una longitud incorrecta");
+        	return;}
         
         //DIVIDIMOS LA REFERENCIA CATASTRAL EN SUS APARTADOS
         char[] cadenaTeclado = entradaTeclado.toCharArray();
@@ -24,10 +29,15 @@ import javax.swing.SortingFocusTraversalPolicy;
         char[] plano = new char[11];
         char[] control = new char[2];
         
-        
         for(int i = 0;i<7;i++)	finca[i]=cadenaTeclado[i];
         for(int i = 0;i<11;i++)	plano[i]=cadenaTeclado[i+7];
         for(int i = 0;i<2;i++)	control[i]=cadenaTeclado[i+18];
+        
+        /*			VERIFICAMOS QUE LA RECOGIDA DE DATOS
+        System.out.println("Finca: "+String.valueOf(finca));
+        System.out.println("Plano: "+String.valueOf(plano));
+        System.out.println("Control: "+String.valueOf(control));
+        */
         
         //HAYAMOS LA SUMA DE LOS VALORES
         int sumaFinca=0,sumaHoja=0;
@@ -36,23 +46,22 @@ import javax.swing.SortingFocusTraversalPolicy;
         for(int i=0;i<11;i++) sumaHoja=sumaHoja+(valorCaracter(plano[i]))*multiploPosicion(i);
         
         //OBTENEMOS EL RESTO Y LO SUSTITUIMOS POR LOS CARACTERES DE CONTROL
-        char caracter1,caracter2;
         
-        caracter1=comprobar(sumaFinca%23);
-        caracter2=comprobar(sumaHoja%23);
+        char caracter1=comprobar(sumaFinca%23);
+        char caracter2=comprobar(sumaHoja%23);
         
-        
-        
-        /*			VERIFICAMOS QUE LA RECOGIDA DE DATOS
-        for(int i = 0;i<7;i++)	System.out.println("Finca:"+finca[i]);
-        for(int i = 0;i<7;i++)	System.out.println("Plano:"+plano[i]);
-        for(int i = 0;i<2;i++)System.out.println("Control:"+control[i]);
-        */
+        //			COMPROBAMOS LOS DIGITOS DE CONTROL
+        System.out.println("La 1ª cifra de control es: "+ caracter1);
+        System.out.println("La 2ª cifra de control es: "+ caracter2);
         
         //VERIFICAMOS SI LA REFERENCIA CATASTRAL ES CORRECTA
         //9872023VH5797S0001WX
-        System.out.println("La 1ª cifra de control es: "+ caracter1);
-        System.out.println("La 2ª cifra de control es: "+ caracter2);
+        
+        if (caracter1!=control[0]||caracter2!=control[1])
+        	System.out.println("Referencia catastral incorrecta");
+        else
+        	System.out.println("Referencia catastral urbana correcta: "
+        +String.valueOf(finca)+"-"+String.valueOf(plano)+"-"+String.valueOf(control));
 	}
 	
 	public static int valorCaracter(int caracter) {
