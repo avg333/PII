@@ -1,0 +1,77 @@
+package p1;
+import java.lang.*;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+public class ej3 {
+	public static void main(String [] args) {
+		int numerodedias=0;
+		int numerodesemanas=0;
+		int dia1=Integer.parseInt(args[0]);
+		int mes1=Integer.parseInt(args[1]);
+		int anho1=Integer.parseInt(args[2]);
+		int dia2=Integer.parseInt(args[3]);
+		int mes2=Integer.parseInt(args[4]);
+		int anho2=Integer.parseInt(args[5]);
+		long milis1;
+		long milis2;
+		Calendar mayor=Calendar.getInstance();
+		Calendar menor=Calendar.getInstance();
+		Calendar fecha1=Calendar.getInstance();
+		Calendar fecha2=Calendar.getInstance();
+		fecha1.set(anho1, mes1-1,dia1);
+		fecha2.set(anho2, mes2-1,dia2);
+		milis1=fecha1.getTimeInMillis();
+		milis2=fecha2.getTimeInMillis();
+		if(milis1>milis2) {
+			mayor.set(anho1,mes1-1,dia1);
+			menor.set(anho2, mes2-1,dia2);
+		}
+		if(milis2>milis1) {
+			mayor.set(anho2, mes2-1,dia2);
+			menor.set(anho1,mes1-1,dia1);
+		}
+		if(mayor.get(Calendar.DAY_OF_WEEK)==Calendar.TUESDAY) {
+			mayor.add(Calendar.DATE, -1);
+		}
+		if(mayor.get(Calendar.DAY_OF_WEEK)==Calendar.WEDNESDAY) {
+			mayor.add(Calendar.DATE, -2);
+		}
+		if(mayor.get(Calendar.DAY_OF_WEEK)==Calendar.THURSDAY) {
+			mayor.add(Calendar.DATE, -3);
+		}
+		if(mayor.get(Calendar.DAY_OF_WEEK)==Calendar.FRIDAY) {
+			mayor.add(Calendar.DATE, -4);
+		}
+		if(mayor.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY) {
+			mayor.add(Calendar.DATE,-5);
+		}
+		if(mayor.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY) {
+			mayor.add(Calendar.DATE, -6);
+		}
+		if(menor.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY) {
+			menor.add(Calendar.DATE, 1);
+		}
+		if(menor.get(Calendar.DAY_OF_WEEK)==Calendar.SATURDAY) {
+			menor.add(Calendar.DATE,2);
+		}
+		if(menor.get(Calendar.DAY_OF_WEEK)==Calendar.FRIDAY) {
+			menor.add(Calendar.DATE, 3);
+		}
+		if(menor.get(Calendar.DAY_OF_WEEK)==Calendar.THURSDAY) {
+			menor.add(Calendar.DATE, 4);
+		}
+		if(menor.get(Calendar.DAY_OF_WEEK)==Calendar.WEDNESDAY) {
+			menor.add(Calendar.DATE, 5);
+		}
+		if(menor.get(Calendar.DAY_OF_WEEK)==Calendar.TUESDAY) {
+			menor.add(Calendar.DATE, 6);
+		}
+		while(1==1) {
+			if((menor.get(Calendar.DATE)==mayor.get(Calendar.DATE))&&(menor.get(Calendar.MONTH)==mayor.get(Calendar.MONTH))&&(menor.get(Calendar.YEAR)==mayor.get(Calendar.YEAR)))break;
+			numerodedias++;
+			menor.add(Calendar.DATE, 1);
+		}
+		numerodesemanas=numerodedias/7;
+		System.out.println(numerodesemanas);
+	}
+}
