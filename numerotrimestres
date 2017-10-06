@@ -1,0 +1,63 @@
+import java.lang.*;
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+public class nuevocalendario {
+	public static void main(String[] args) {
+		int dia1=Integer.parseInt(args[0]);
+		int mes1=Integer.parseInt(args[1]);
+		int anho1=Integer.parseInt(args[2]);
+		int dia2=Integer.parseInt(args[3]);
+		int mes2=Integer.parseInt(args[4]);
+		int anho2=Integer.parseInt(args[5]);
+		int meses=0;
+		int trimestres=0;
+		int mesesincompletos=0;
+		int mesesnumerador=0;
+		int mesesdenominador=0;
+		int numero=0;
+		double resultadofinal;
+		Calendar fecha1=Calendar.getInstance();
+		Calendar fecha2=Calendar.getInstance();
+		fecha1.set(anho1, mes1-1,dia1);
+		fecha2.set(anho2, mes2-1,dia2);
+		long milis1=fecha1.getTimeInMillis();
+		long milis2=fecha2.getTimeInMillis();
+		Calendar mayor=Calendar.getInstance();
+		Calendar menor=Calendar.getInstance();
+		if(milis1>milis2) {
+			mayor.set(anho1, mes1-1,dia1);
+			menor.set(anho2, mes2-1,dia2);
+		}
+		if(milis2>milis1) {
+			mayor.set(anho2, mes2-1,dia2);
+			menor.set(anho1, mes1-1,dia1);
+		}
+		while(1==1) {
+			if((menor.get(Calendar.MONTH)==mayor.get(Calendar.MONTH))&&(menor.get(Calendar.YEAR)==mayor.get(Calendar.YEAR)))break;
+			meses++;
+			menor.add(Calendar.MONTH,1);
+			
+		}
+		trimestres=meses/3;
+		mesesincompletos=(meses%3)+1;
+		if(mayor.get(Calendar.DATE)!=1) {
+			mayor.add(Calendar.DATE,-1);
+		}
+		numero=mayor.get(Calendar.DATE);
+		int i;
+		for(i=0;i<mesesincompletos;i++) {
+			mesesdenominador+=mayor.getActualMaximum(Calendar.DATE);
+			mayor.add(Calendar.MONTH, -1);
+		}
+		mayor.add(Calendar.MONTH,1);
+		for(i=0;i<(mesesincompletos-1);i++) {
+			mesesnumerador+=mayor.getActualMaximum(Calendar.DATE);
+			mayor.add(Calendar.MONTH, 1);
+		}
+		mesesnumerador+=numero;
+		resultadofinal=trimestres+((double)mesesnumerador/(double)mesesdenominador);
+		DecimalFormat df= new DecimalFormat("#.00");
+		System.out.println(df.format(resultadofinal));
+	}
+}
