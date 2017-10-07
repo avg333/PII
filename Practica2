@@ -1,52 +1,49 @@
 package practica2;
 
-import java.util.Scanner;
-
 public class Practica2 {
-	
-	private static Scanner entradaEscaner;
 
 	public static void main(String[] args) {
 		
-		//SOLICITAMOS Y RECOGEMOS LA REFERENCIA CATASTRAL
+		//RECOGEMOS LA REFERENCIA CATASTRAL Y VERFICAMOS SU LONGITUD
 		
-		String entradaTeclado;
-		System.out.println("Introduzca la referencia castral: ");
-		entradaEscaner = new Scanner (System.in);
-        entradaTeclado = entradaEscaner.nextLine ();
-        
-        //SI LA LONGITUD ES INCORRECTA AVISAMOS Y SALIMOS
-        if (entradaTeclado.length()!=20) {
+        String entradaDatos=args[0];
+        if (entradaDatos.length()!=20) {
         	System.out.println("La referencia catastral tiene una longitud incorrecta");
         	return;}
         
         //DIVIDIMOS LA REFERENCIA CATASTRAL EN SUS APARTADOS
-        char[] cadenaTeclado = entradaTeclado.toCharArray();
+        char[] cadenaDatos = entradaDatos.toCharArray();
         char[] finca = new char[7];
-        char[] plano = new char[11];
+        char[] plano = new char[7];
+        char[] local = new char[4];
         char[] control = new char[2];
         
-        for(int i = 0;i<7;i++)	finca[i]=cadenaTeclado[i];
-        for(int i = 0;i<11;i++)	plano[i]=cadenaTeclado[i+7];
-        for(int i = 0;i<2;i++)	control[i]=cadenaTeclado[i+18];
+        for(int i = 0;i<7;i++)	finca[i]=cadenaDatos[i];
+        for(int i = 0;i<7;i++)	plano[i]=cadenaDatos[i+7];
+        for(int i = 0;i<4;i++)	local[i]=cadenaDatos[i+14];
+        for(int i = 0;i<2;i++)	control[i]=cadenaDatos[i+18];
         
-        		/*	VERIFICAMOS QUE LA RECOGIDA DE DATOS
+        /*			VERIFICAMOS QUE LA RECOGIDA DE DATOS
         System.out.println("Finca: "+String.valueOf(finca));
         System.out.println("Plano: "+String.valueOf(plano));
-        System.out.println("Control: "+String.valueOf(control));
-        */
+        System.out.println("Local: "+String.valueOf(local));
+        System.out.println("Control: "+String.valueOf(control));*/
         
         //HAYAMOS LA SUMA DE LOS VALORES
         int sumaFinca=0,sumaHoja=0;
+        char[] cadenaPosicion= {13,15,12,5,4,17,9,21,3,7,1};
         
-        for(int i=0;i<7;i++) sumaFinca=sumaFinca+(finca[i]-48)*multiploPosicion(i);
-        for(int i=0;i<4;i++) sumaFinca=sumaFinca+(plano[7+i]-48)*multiploPosicion(i+7);
-        for(int i=0;i<11;i++) sumaHoja=sumaHoja+(valorCaracter(plano[i]))*multiploPosicion(i);
+        for(int i=0;i<7;i++) sumaFinca=sumaFinca+(finca[i]-48)*cadenaPosicion[i];
+        for(int i=0;i<4;i++) sumaFinca=sumaFinca+(local[i]-48)*cadenaPosicion[i+7];
+        
+        for(int i=0;i<7;i++) sumaHoja=sumaHoja+(valorCaracter(plano[i]))*cadenaPosicion[i];
+        for(int i=0;i<4;i++) sumaHoja=sumaHoja+(local[i]-48)*cadenaPosicion[i+7];
         
         //OBTENEMOS EL RESTO Y LO SUSTITUIMOS POR LOS CARACTERES DE CONTROL
+        char[] cadenaCaracter= {'M','Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','B','Z','X'};
         
-        char caracter1=comprobar(sumaFinca%23);
-        char caracter2=comprobar(sumaHoja%23);
+        char caracter1=cadenaCaracter[sumaFinca%23];
+        char caracter2=cadenaCaracter[sumaHoja%23];
         
         /*			COMPROBAMOS LOS DIGITOS DE CONTROL
         System.out.println("La 1ª cifra de control es: "+ caracter1);
@@ -59,7 +56,7 @@ public class Practica2 {
         	System.out.println("Referencia catastral incorrecta");
         else
         	System.out.println("Referencia catastral urbana correcta: "
-        +String.valueOf(finca)+"-"+String.valueOf(plano)+"-"+String.valueOf(control));
+        +String.valueOf(finca)+"-"+String.valueOf(plano)+"-"+String.valueOf(local)+"-"+String.valueOf(control));
 	}
 	
 	public static int valorCaracter(int caracter) {
@@ -73,87 +70,4 @@ public class Practica2 {
 			valor=caracter-63;
 		return valor;
 	}
-	
-	public static int multiploPosicion(int lugar) {
-		int posicion=0;
-		switch(lugar) {
-			case 0: posicion=13;
-			break;
-			case 1: posicion=15;
-			break;
-			case 2: posicion=12;
-			break;
-			case 3: posicion=5;
-			break;
-			case 4: posicion=4;
-			break;
-			case 5: posicion=17;
-			break;
-			case 6: posicion=9;
-			break;
-			case 7: posicion=21;
-			break;
-			case 8: posicion=3;
-			break;
-			case 9: posicion=7;
-			break;
-			case 10: posicion=1;
-			break;
-		}
-		return posicion;
-	}
-	
-	public static char comprobar(int resto) {
-		char caracter='0';
-		switch (resto) {
-			case 0: caracter='M';
-			break;
-			case 1: caracter='Q';
-			break;
-			case 2: caracter='W';
-			break;
-			case 3: caracter='E';
-			break;
-			case 4: caracter='R';
-			break;
-			case 5: caracter='T';
-			break;
-			case 6: caracter='Y';
-    		break;
-			case 7: caracter='U';
-			break;
-			case 8: caracter='I';
-			break;
-			case 9: caracter='O';
-			break;
-			case 10: caracter='P';
-			break;
-			case 11: caracter='A';
-			break;
-			case 12: caracter='S';
-			break;
-			case 13: caracter='D';
-			break;
-			case 14: caracter='F';
-			break;
-			case 15: caracter='G';
-			break;
-			case 16: caracter='H';
-			break;
-			case 17: caracter='J';
-			break;
-			case 18: caracter='K';
-			break;
-			case 19: caracter='L';
-			break;
-			case 20: caracter='B';
-			break;
-			case 21: caracter='Z';
-			break;
-			case 22: caracter='X';
-			break;
-		}
-		return caracter;
-	}
-
 }
