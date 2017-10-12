@@ -1,0 +1,98 @@
+package p2final;
+
+public class P2final {
+	public static void main(String[] args) {
+		String principal=args[0];
+		if(principal.length()!=20) {
+			System.out.println("La referencia catastral tiene una longitud incorrecta");
+			return;
+		}
+		char arrayfinal[]= {'M','Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','B','Z','X'};
+		int i=0;
+		int des1[];
+		des1=new int[20];
+		int des2[];
+		des2=new int[20];
+		int a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11;
+		int b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11;
+		int sumatotal1;
+		int sumatotal2;
+		int resto1;
+		int resto2;
+		String finca=principal.substring(0, 7);
+		String hojadelplano=principal.substring(7,14);
+		String local=principal.substring(14,18);
+		String control=principal.substring(18,20);
+		String desglose1=finca+local;
+		String desglose2=hojadelplano+local;
+		char nuevodesglose1[]=desglose1.toCharArray();
+		char nuevodesglose2[]=desglose2.toCharArray();
+		char nuevocontrol[]=control.toCharArray();
+		for(i=0;i<11;i++) {
+			if(nuevodesglose1[i]=='Ñ') {
+				des1[i]=15;
+				continue;
+			}
+			if((nuevodesglose1[i]>='A')&&(nuevodesglose1[i]<='N')) {
+				des1[i]=((int)nuevodesglose1[i])-64;
+				continue;
+			}
+			if((nuevodesglose1[i]>='O')&&(nuevodesglose1[i]<='Z')) {
+				des1[i]=((int)nuevodesglose1[i])-63;
+				continue;
+			}
+			des1[i]=((int)nuevodesglose1[i])-48;
+		}
+		for(i=0;i<11;i++) {
+			if(nuevodesglose2[i]=='Ñ') {
+				des2[i]=15;
+				continue;
+			}
+			if((nuevodesglose2[i]>='A')&&(nuevodesglose2[i]<='N')) {
+				des2[i]=((int)nuevodesglose2[i])-64;
+				continue;
+			}
+			if((nuevodesglose2[i]>='O')&&(nuevodesglose2[i]<='Z')) {
+				des2[i]=((int)nuevodesglose2[i])-63;
+				continue;
+			}
+			des2[i]=((int)nuevodesglose2[i])-48;
+		}
+		a1=des1[0]*13;
+		a2=des1[1]*15;
+		a3=des1[2]*12;
+		a4=des1[3]*5;
+		a5=des1[4]*4;
+		a6=des1[5]*17;
+		a7=des1[6]*9;
+		a8=des1[7]*21;
+		a9=des1[8]*3;
+		a10=des1[9]*7;
+		a11=des1[10]*1;
+		b1=des2[0]*13;
+		b2=des2[1]*15;
+		b3=des2[2]*12;
+		b4=des2[3]*5;
+		b5=des2[4]*4;
+		b6=des2[5]*17;
+		b7=des2[6]*9;
+		b8=des2[7]*21;
+		b9=des2[8]*3;
+		b10=des2[9]*7;
+		b11=des2[10]*1;
+		sumatotal1=a1+a2+a3+a4+a5+a6+a7+a8+a9+a10+a11;
+		sumatotal2=b1+b2+b3+b4+b5+b6+b7+b8+b9+b10+b11;
+		resto1=sumatotal1%23;
+		resto2=sumatotal2%23;
+		System.out.println("La variable de control 1 introducida es: "+nuevocontrol[0]);
+		System.out.println("La variable de control 2 introducida es: "+nuevocontrol[1]);
+		System.out.println("La variable de control 1 calculada es: "+arrayfinal[resto1]);
+		System.out.println("La variable de control 2 calculada es: "+arrayfinal[resto2]);
+		if((nuevocontrol[0]==arrayfinal[resto1])&&(nuevocontrol[1]==arrayfinal[resto2])) {
+			System.out.println("Referencia catastral correcta: "+finca+"-"+hojadelplano+"-"+local+"-"+control);
+		}
+		else {
+			System.out.println("Referencia catastral incorrecta");
+		}
+	}
+}
