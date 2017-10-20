@@ -1,0 +1,139 @@
+
+public class ReferenciaCatastral {
+	//ATRIBUTOS
+	String finca;
+	String hojadelplano;
+	String local;
+	String control;
+	
+
+	//CONSTRUCTOR
+	public ReferenciaCatastral(String cadena) {
+		this.finca=cadena.substring(0,7);
+		this.hojadelplano=cadena.substring(7,14);
+		this.local=cadena.substring(14,18);
+		this.control=cadena.substring(18,20);
+	}
+	
+	
+	
+	//GETS
+	public String getFinca() {
+		return this.finca;
+	}
+	public String getHojadelplano() {
+		return this.hojadelplano;
+	}
+	public String getLocal() {
+		return this.local;
+	}
+	public String getControl() {
+		return this.control;
+	}
+	
+	
+	//SETS
+	public void setFinca(String cadena) {
+		this.finca=cadena;
+	}
+	public void setHojadelplano(String cadena) {
+		this.hojadelplano=cadena;
+	}
+	public void setLocal(String cadena) {
+		this.local=cadena;
+	}
+	public void setControl(String cadena) {
+		this.control=cadena;
+	}
+	
+	
+	//CREAMOS UN METODO PARA CALCULAR EL PRIMER CARACTER DE CONTROL   [getCarControl1()]
+	public char getCarControl1() {
+		char[] listafinal= {'M','Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','B','Z','X'}; 
+		int i;
+		int resto;
+		int sumatotal;
+		String desglose=this.finca+this.local;  //Ponemos la referencia en string,array de caracteres y array de enteros    
+		char[] elarray=desglose.toCharArray();   
+		int[] enteros=new int[30];
+		for(i=0;i<11;i++) {
+			if((elarray[i]<='9')&&(elarray[i]>='0')) {
+				enteros[i]=((int)elarray[i])-48;
+			}
+			if((elarray[i]<='N')&&(elarray[i]>='A')) {
+				enteros[i]=((int)elarray[i])-64;
+			}
+			if((elarray[i]>='O')&&(elarray[i]<='Z')) {
+				enteros[i]=((int)elarray[i])-63;
+			}
+			if(elarray[i]=='Ñ') {
+				enteros[i]=15;
+			}
+		}
+		//Ahora multiplicamos cada valor de enteros[] por el numero asignado a su posicion
+		int A1=enteros[0]*13;
+		int A2=enteros[1]*15;
+		int A3=enteros[2]*12;
+		int A4=enteros[3]*5;
+		int A5=enteros[4]*4;
+		int A6=enteros[5]*17;
+		int A7=enteros[6]*9;
+		int A8=enteros[7]*21;
+		int A9=enteros[8]*3;
+		int A10=enteros[9]*7;
+		int A11=enteros[10]*1;
+		
+		//Obtenemos el resto y lo convertimos a letra
+		sumatotal=A1+A2+A3+A4+A5+A6+A7+A8+A9+A10+A11;
+		resto=sumatotal%23;
+		return listafinal[resto];
+		
+	}
+	
+	/*CREAMOS UN METODO PARA CALCULAR EL SEGUNDO CARACTER DE CONTROL(exactamente igual pero con desglose diferente)
+	[getCarControl2()]      */
+	
+	public char getCarControl2() {
+			char[] listafinal= {'M','Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','B','Z','X'}; 
+			int i;
+			int resto;
+			int sumatotal;
+			String desglose=this.hojadelplano+this.local;  //Ponemos la referencia en string,array de caracteres y array de enteros    
+			char[] elarray=desglose.toCharArray();   
+			int[] enteros=new int[30];
+			for(i=0;i<11;i++) {
+				if((elarray[i]<='9')&&(elarray[i]>='0')) {
+					enteros[i]=((int)elarray[i])-48;
+				}
+				if((elarray[i]<='N')&&(elarray[i]>='A')) {
+					enteros[i]=((int)elarray[i])-64;
+				}
+				if((elarray[i]>='O')&&(elarray[i]<='Z')) {
+					enteros[i]=((int)elarray[i])-63;
+				}
+				if(elarray[i]=='Ñ') {
+					enteros[i]=15;
+				}
+			}
+			//Ahora multiplicamos cada valor de enteros[] por el numero asignado a su posicion
+			int A1=enteros[0]*13;
+			int A2=enteros[1]*15;
+			int A3=enteros[2]*12;
+			int A4=enteros[3]*5;
+			int A5=enteros[4]*4;
+			int A6=enteros[5]*17;
+			int A7=enteros[6]*9;
+			int A8=enteros[7]*21;
+			int A9=enteros[8]*3;
+			int A10=enteros[9]*7;
+			int A11=enteros[10]*1;
+			
+			//Obtenemos el resto y lo convertimos a letra
+			sumatotal=A1+A2+A3+A4+A5+A6+A7+A8+A9+A10+A11;
+			resto=sumatotal%23;
+			return listafinal[resto];
+		}
+	
+	
+	
+}
