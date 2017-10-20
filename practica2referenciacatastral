@@ -1,0 +1,23 @@
+public class Main {
+	public static void main(String[] args) {
+		char caracter1;
+		char caracter2;
+		if(args[0].length()!=20) {
+			System.out.println("La referencia catastral tiene una longitud incorrecta");
+		}
+		ReferenciaCatastral datos=new ReferenciaCatastral(args[0]);
+		//datos es la referencia introducida
+		caracter1=datos.getCarControl1();
+		caracter2=datos.getCarControl2();
+		String delcontrol=datos.getControl();
+		char[] arraycomprobacion=delcontrol.toCharArray();
+		if((arraycomprobacion[0]==caracter1)&&(arraycomprobacion[1]==caracter2)) {
+			System.out.println("Referencia catastral urbana correcta: "+datos.getFinca()+"-"+datos.getHojadelplano()+
+					"-"+datos.getLocal()+"-"+datos.getControl());
+		}
+		System.out.println("El caracter 1 de control introducido es "+arraycomprobacion[0]);
+		System.out.println("El caracter 1 de control calculado es "+caracter1);
+		System.out.println("El caracter 2 de control introducido es "+arraycomprobacion[1]);
+		System.out.println("El caracter 2 de control calculado es "+caracter2);
+	}
+}
