@@ -50,7 +50,7 @@ public class Practica3 {
 		FileWriter fichero = null;
 	    PrintWriter pw = null;
 	    try{
-	    	fichero = new FileWriter("C:\\Users\\avg33\\Dropbox\\UNIVERSIDAD\\PII\\archivo2.txt");
+	    	fichero = new FileWriter(rutaFichero);
 	        pw = new PrintWriter(fichero);
 	        int i=0;
 	        while(i<lineas&&i<100) {
