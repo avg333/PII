@@ -1,0 +1,46 @@
+package practica2;
+
+public class ReferenciaCatastral {
+
+	private String finca;
+    private String plano;
+    private String local;
+    private String control;
+    
+    public static int longitud = 20;
+    
+    
+	public ReferenciaCatastral (String rc) {
+		this.finca = rc.substring(0,7);
+		this.plano = rc.substring(7,14);
+		this.local = rc.substring(14,18);
+		this.control = rc.substring(18,20);
+	}
+		
+	//A ESTE METODO LE DAMOS UN CARACTER Y NOS DEVUELVE SU VALOR COMO ENTERO
+	public static int valorCaracter(int caracter) {
+		int valor;
+		if (caracter==165) valor=15;
+		else if (caracter<58)
+			valor=caracter-48;
+		else if (caracter<=78)
+			valor=caracter-64;
+		else
+			valor=caracter-63;
+		return valor;
+	}
+	
+	//METODOS DE OBJETO
+	public String getFinca() {
+		return finca;
+	}
+	public String getPlano() {
+		return plano;
+	}
+	public String getLocal() {
+		return local;
+	}
+	public String getControl() {
+		return control;
+	}
+}
