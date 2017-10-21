@@ -1,0 +1,49 @@
+package practica2;
+
+public class Practica2 {
+
+	public static void main(String[] args) {
+		
+		//RECOGEMOS LA REFERENCIA CATASTRAL Y VERFICAMOS SU LONGITUD
+        String entradaDatos=args[0];
+        
+        if (entradaDatos.length()!=ReferenciaCatastral.longitud) {
+        	System.out.println("La referencia catastral tiene una longitud incorrecta");
+        	return;}
+        
+        ReferenciaCatastral rc1 = new ReferenciaCatastral(entradaDatos);
+        
+        //CONVERTIMOS LOS STRINGS EN CHARS
+        char[] finca = rc1.getFinca().toCharArray();
+        char[] plano = rc1.getPlano().toCharArray();
+        char[] local = rc1.getLocal().toCharArray();
+        char[] control = rc1.getControl().toCharArray();
+              
+        //CALCULAMOS LA SUMA DE LOS VALORES DE LAS PARTES        
+        int sumaFinca=0,sumaHoja=0;
+        char[] cadenaPosicion= {13,15,12,5,4,17,9,21,3,7,1};
+              
+        for(int i=0;i<7;i++) sumaFinca=sumaFinca+(finca[i]-48)*cadenaPosicion[i];
+        for(int i=0;i<4;i++) sumaFinca=sumaFinca+(local[i]-48)*cadenaPosicion[i+7];
+              
+        for(int i=0;i<7;i++) sumaHoja=sumaHoja+(ReferenciaCatastral.valorCaracter(plano[i]))*cadenaPosicion[i];
+        for(int i=0;i<4;i++) sumaHoja=sumaHoja+(local[i]-48)*cadenaPosicion[i+7];
+              
+        //OBTENEMOS EL RESTO Y LO SUSTITUIMOS POR LOS CARACTERES DE CONTROL
+        char[] cadenaCaracter= {'M','Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','B','Z','X'};
+              
+        char[] controlR= new char[2];        
+        controlR[0]=cadenaCaracter[sumaFinca%23];
+        controlR[1]=cadenaCaracter[sumaHoja%23];
+        
+        //VERIFICAMOS SI LA REFERENCIA CATASTRAL ES CORRECTA
+        //9872023VH5797S0001WX
+
+        if (control[0]!=controlR[0]||control[1]!=control[1])
+        	System.out.println("Referencia catastral incorrecta");
+        else
+        	System.out.println("Referencia catastral urbana correcta: "
+        +rc1.getFinca()+"-"+rc1.getPlano()+"-"+rc1.getLocal()+"-"+rc1.getControl());
+	}
+	
+}
