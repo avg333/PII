@@ -1,0 +1,44 @@
+package practica3;
+
+public class PropiedadInmobiliaria implements Comparable<PropiedadInmobiliaria> {
+	private String ReferenciaCatastral; 
+    private String Clase;  
+    private String Fecha; 
+    private String Nombre;
+    private long Time;
+
+    public PropiedadInmobiliaria(String RefCas, String Cla, String Fec, String Nom, long Tim){
+    	this.ReferenciaCatastral=RefCas;
+    	this.Clase=Cla;
+    	this.Fecha=Fec;
+    	this.Nombre=Nom;
+    	this.Time=Tim;
+    }
+    
+    @Override
+    public int compareTo(PropiedadInmobiliaria o) {
+        if (this.Time<o.Time) {   return -1;      }
+        else if (this.Time>o.Time) {    return 1;      }
+        else {
+            if (this.Clase.replace(" ","")=="Urbana") {  return -1;    }
+            else if (this.Clase.replace(" ","")=="Rustica") {   return -1;   }
+            else {   return 0;   }
+        }
+    }
+
+    public String getRefCas() {
+    	return ReferenciaCatastral;
+    }
+    public String getCla() {
+    	return Clase;
+    }
+    public String getFec() {
+    	return Fecha;
+    }
+    public String getNom() {
+    	return Nombre;
+    }
+    public long getTim() {
+    	return Time;
+    }
+}
