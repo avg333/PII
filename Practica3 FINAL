@@ -1,0 +1,106 @@
+package practica3;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+public class Practica3 {
+
+	public static void main(String[] args) {
+		
+		String rutaFichero = args[0];
+		//String rutaFichero = "C:\\Users\\avg33\\Dropbox\\UNIVERSIDAD\\PII\\archivo.txt";
+		
+		//COMPROBAMOS SI EXISTE EL FICHERO Y SU NUMERO DE LINEAS
+		int lineas=verificarFichero(rutaFichero);
+		if (lineas==-1) return;
+		
+		PropiedadInmobiliaria[] PI=new PropiedadInmobiliaria[lineas];	
+		
+		
+		//LEEMOS EL FICHERO Y GUARDAMOS LA LINEA EN UN STRING
+		//LA CUAL DIVIDIMOS Y ALMACENAMOS EN EL OBJETO
+		File archivo = new File (rutaFichero);
+		FileReader fr = null;
+		BufferedReader br = null;
+		try {
+			fr = new FileReader (archivo);
+			br = new BufferedReader(fr);
+			String linea;
+			int i=0;
+			while((linea=br.readLine())!=null) {
+				String[] DATOS=linea.split("\\*");
+				PI[i]=new PropiedadInmobiliaria(DATOS[0],DATOS[1],DATOS[2],DATOS[3],fecha(DATOS[2]));
+	            i++;
+			}
+		}catch(Exception e){
+			e.printStackTrace();}
+		finally{
+			try{
+				if( null != fr )fr.close();
+				}catch (Exception e2){ 
+					e2.printStackTrace();}
+			}
+		
+		//ORDENAMOS EL ARRAY
+		Arrays.sort(PI);
+
+		//ESCRIBIMOS LA BASE DE DATOS EN EL FICHERO
+		FileWriter fichero = null;
+	    PrintWriter pw = null;
+	    try{
+	    	fichero = new FileWriter("C:\\Users\\avg33\\Dropbox\\UNIVERSIDAD\\PII\\archivo2.txt");
+	        pw = new PrintWriter(fichero);
+	        int i=0;
+	        while(i<lineas&&i<100) {
+	        	pw.println(PI[i].getRefCas()+"*"+PI[i].getCla()+"*"+PI[i].getFec()+"*"+PI[i].getNom());
+	        	System.out.println(PI[i].getRefCas()+"*"+PI[i].getCla()+"*"+PI[i].getFec()+"*"+PI[i].getNom());
+	        	i++;
+	        }
+	    }catch (Exception e) {
+	    	e.printStackTrace();}
+	    finally {
+	    	try {
+	    		if (null != fichero) fichero.close();
+	    	} catch (Exception e2) {
+	    		e2.printStackTrace();}
+	    }
+	}
+	
+	public static int verificarFichero (String ruta) {
+		File f = new File(ruta);
+		FileReader fr = null;
+		BufferedReader br = null;
+		if (f.exists()!=true){
+			System.out.println("Fichero inexistente: "+ ruta);
+			return -1;}
+		int lineas=0;
+		try {
+			fr = new FileReader (f);
+			br = new BufferedReader(fr);
+			while((br.readLine())!=null) {
+	            lineas++;
+			}
+		}catch(Exception e){
+			e.printStackTrace();}
+		finally{
+			try{
+				if( null != fr )fr.close();
+				}catch (Exception e2){ 
+					e2.printStackTrace();}
+		}
+		return lineas;
+	}
+	
+	public static long fecha(String dato) {
+		String fechaAux=dato.replace(" ","");
+		String[] fechaD=fechaAux.split("/");
+		
+		Calendar fecha = new GregorianCalendar();
+		fecha.set(Integer.parseInt(fechaD[2]),Integer.parseInt(fechaD[1])-1,Integer.parseInt(fechaD[0]));
+		
+		return fecha.getTimeInMillis();
+	}
+	
+}
