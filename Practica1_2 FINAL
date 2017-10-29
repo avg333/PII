@@ -2,8 +2,8 @@ package tiempos;
 
 public class Practica1_2 {
 	
-	public static void main(String[] args) {
-		
+	public static void main(String args[]) {
+		//ALMACENAMOS LOS DATOS INTRODUCIDOS
 		int hora1=Integer.parseInt(args[0]),   hora2=Integer.parseInt(args[5]);
 		int minuto1=Integer.parseInt(args[1]), minuto2=Integer.parseInt(args[6]);
 		int segundo1=Integer.parseInt(args[2]), segundo2=Integer.parseInt(args[7]);
@@ -22,32 +22,39 @@ public class Practica1_2 {
 		if (verificar(decima2,'d')==0) fallo2++;
 		if (verificar(centesima1,'d')==0) fallo1++;
 		if (verificar(centesima2,'d')==0) fallo2++;
-		
 		if(fallo1!=0) {
 			System.out.println("Hora incorrecta: "+hora1+":"+minuto1+":"+segundo1+"-"+decima1+"."+centesima1);
+			if(fallo2!=0) {
+				System.out.println("Hora incorrecta: "+hora2+":"+minuto2+":"+segundo2+"-"+decima2+"."+centesima2);
+				return;}
 			return;}
 		else if(fallo2!=0) {
 			System.out.println("Hora incorrecta: "+hora2+":"+minuto2+":"+segundo2+"-"+decima2+"."+centesima2);
 			return;}
 		
-		//PASAMOS AMBOS INSTANTES A MILESIMAS
-		int instante1=hora1*60*60*1000+minuto1*60*1000+segundo1*1000+decima1*100*centesima1*10;
-		int instante2=hora2*60*60*1000+minuto2*60*1000+segundo2*1000+decima2*100*centesima2*10;
-		int resultado;
-		//BUSCAMOS EL MAYOR Y LE RESTAMOS EL MENOR
-		if (instante1>instante2) resultado=instante1-instante2;
-		else resultado=instante2-instante1;
+		//PASAMOS LAS DOS HORAS A CENTESIMAS Y RESTAMOS
+		long instante1, instante2, instantefinal=0;
+		instante1=(hora1*360000)+(minuto1*6000)+(segundo1*100)+(decima1*10)+centesima1;
+		instante2=(hora2*360000)+(minuto2*6000)+(segundo2*100)+(decima2*10)+centesima2;
+		if((instante1>=instante2)) 
+			instantefinal=instante1-instante2;
+		else
+			instantefinal=instante2-instante1;
 		
-		//PASAMOS EL RESULTADO DE MILESIMAS A LAS UNIDADES INDICADAS
-		int hora=resultado/(1000*60*60);
-		int minuto=resultado/1000/60-hora*60;
-		int segundo=resultado/(1000)-minuto*60-hora*60*60;
-		int decima=resultado/100-minuto*60*10-hora*60*60*10-segundo*10;
-		int centesima=resultado/10-minuto*60*10*10-hora*60*60*10*10-segundo*10*10-decima*10;
-
-		System.out.println(hora+":"+minuto+":"+segundo+"-"+decima+"."+centesima);
+		//CONVERTIMOS LA RESTA EN HORAS,MINUTOS,SEGUNDOS,DECIMAS Y CENTESIMAS
+		long horasfinal,minutosfinal,segundosfinal,decimasfinal,centesimasfinal;
+		horasfinal=instantefinal/360000;
+		minutosfinal=(instantefinal/6000)-(horasfinal*60);
+		segundosfinal=(instantefinal/100)-(horasfinal*3600)-(minutosfinal*60);
+		decimasfinal=(instantefinal/10)-(horasfinal*36000)-(minutosfinal*600)-(segundosfinal*10);
+		centesimasfinal=(instantefinal)-(horasfinal*360000)-(minutosfinal*6000)-(segundosfinal*100)-(decimasfinal*10);
+		
+		//MOSTRAMOS EL RESULTADO FINAL POR PANTALLA
+		System.out.println(String.format("%02d", horasfinal)+":"+(String.format("%02d", minutosfinal))+
+				":"+(String.format("%02d", segundosfinal))+"-"+decimasfinal+"."+centesimasfinal);
 	}
-
+	
+	//CLASE PARA COMPROBAR ERRORES
 	public static int verificar (int numero, char tipo) {
 		if(tipo=='h') {
 			if(numero<=23&&numero>=0) return 1;
