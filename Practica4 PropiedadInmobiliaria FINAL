@@ -1,0 +1,94 @@
+package practica4;
+
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Map.Entry;
+
+
+public class PropiedadInmobiliaria{
+	private String Dni;
+	private String Clase;  
+    private String Fecha; 
+    private String Nombre;
+    private long Time;
+    private int DniO;
+
+    public PropiedadInmobiliaria(String pDni, String Cla, String Fec, String Nom, long Tim, int pDniO){
+    	this.Dni=pDni;
+    	this.Clase=Cla;
+    	this.Fecha=Fec;
+    	this.Nombre=Nom;
+    	this.Time=Tim;
+    	this.DniO=pDniO;
+    }
+    
+    
+    public String getDni() {
+    	return Dni;
+    }
+    public String getCla() {
+    	return Clase;
+    }
+    public String getFec() {
+    	return Fecha;
+    }
+    public String getNom() {
+    	return Nombre;
+    }
+    public long getTim() {
+    	return Time;
+    }
+    public int getDnio() {
+    	return DniO;
+    }
+
+    
+	/*public int compareTo(PropiedadInmobiliaria o) {
+		return (DniO).comapareTo(o.getDnio());
+    }
+	
+	public int compare(PropiedadInmobiliaria o) {
+		if (this.Time<o.Time) {   return -1;      }
+        else if (this.Time>o.Time) {    return 1;      }
+        else {
+        	return 0;}
+    }*/
+}
+
+
+/*
+class ComparaDni implements Comparator<Map.Entry<String, PropiedadInmobiliaria>> {
+	@Override
+	public int compare (Entry<String, PropiedadInmobiliaria> p1, Entry<String, PropiedadInmobiliaria> p2){
+	    if(p1.getValue().getDnio() < p2.getValue().getDnio()){ 
+	    	return -1;}
+	    else if(p1.getValue().getDnio() > p2.getValue().getDnio()){
+	    	return 1;}
+	    else{
+	    	if(p1.getValue().getTim() < p2.getValue().getTim()) {
+	    		return -1;}
+	    	else if(p1.getValue().getTim() > p2.getValue().getTim()) {
+	    		return 1;}
+	    	else
+	    		return 0;}
+	}
+}*/
+
+class ComparaFecha implements Comparator<Map.Entry<String, PropiedadInmobiliaria>> {
+	@Override
+	public int compare (Entry<String, PropiedadInmobiliaria> p1, Entry<String, PropiedadInmobiliaria> p2){
+	    if(p1.getValue().getTim() < p2.getValue().getTim()){ 
+	    	return -1;}
+	    else if(p1.getValue().getTim() > p2.getValue().getTim()){
+	    	return 1;}
+	    else {
+	    	return 0;}
+	}
+}
+/*
+class ComparaReferencia implements Comparator<Map.Entry<String, PropiedadInmobiliaria>> {
+	@Override
+	public int compare (Entry<String, PropiedadInmobiliaria> p1, Entry<String, PropiedadInmobiliaria> p2){
+		return (p1.getValue()).compareTo(p2.getValue());
+	}
+}*/
