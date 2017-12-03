@@ -1,0 +1,95 @@
+package practica4;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
+public class Practica4 {
+	
+	static Map<String,PropiedadInmobiliaria> PI = new LinkedHashMap<String,PropiedadInmobiliaria>();
+
+	public static void main(String[] args) {
+		
+		leeDatos(args[0]);
+		int eleccion;
+		String busqueda=null;
+		
+		do {
+			Set<String> keys = PI.keySet();
+			//List<Map.Entry<String, PropiedadInmobiliaria>> OR = new LinkedList<Map.Entry<String,PropiedadInmobiliaria>>(PI.entrySet());
+			int encontrado=0;
+			String[] teclado=menu().split(" ");
+			eleccion=Integer.parseInt(teclado[0]);
+			if (eleccion==3||eleccion==4) 
+				busqueda=teclado[1];
+			switch (eleccion) {
+			case 1:
+				//Collections.sort(OR, new ComparaFecha());
+				//Collections.sort(OR, new ComparaReferencia());
+				System.out.println("Referencia	 	Tipo	 DNI	 	propietario	 		Fecha compra");
+				for (String k:keys)
+					System.out.println(k+"	"+PI.get(k).getCla()+"	"+PI.get(k).getDni()+"	"+PI.get(k).getNom()+"	"+PI.get(k).getFec());
+				break;
+			case 2:
+				//Collections.sort(OR, new ComparaFecha());
+				//Collections.sort(OR, new ComparaDni());
+				System.out.println("Referencia	 	Tipo	 DNI	 	propietario	 		Fecha compra");
+				for (String k:keys)
+					System.out.println(k+"	"+PI.get(k).getCla()+"	"+PI.get(k).getDni()+"	"+PI.get(k).getNom()+"	"+PI.get(k).getFec());
+				break;
+			case 3:
+				for (String k:keys)
+					if (k.equals(busqueda)) {
+						System.out.println("Referencia	 	Tipo	 DNI	 	propietario	 		Fecha compra");
+						System.out.println(k+"	"+PI.get(k).getCla()+"	"+PI.get(k).getDni()+"	"+PI.get(k).getNom()+"	"+PI.get(k).getFec());
+						encontrado=1;}
+				if (encontrado!=1)
+					System.out.println("Referencia no existente");
+				break;
+			case 4:
+				//Collections.sort(OR, new ComparaFecha());
+				System.out.println("Referencia	 	Tipo	 DNI	 	propietario	 		Fecha compra");
+				for (String k:keys)
+					if(busqueda.equals(PI.get(k).getDni())) 
+						System.out.println(k+"	"+PI.get(k).getCla()+"	"+PI.get(k).getDni()+"	"+PI.get(k).getNom()+"	"+PI.get(k).getFec());
+				break;
+			}
+		}while (eleccion!=5);
+	}
+	
+	private static void leeDatos(String fich){
+		  Scanner entrada= null;
+		  try	{
+				entrada = new Scanner (new FileInputStream(fich));
+		  }	catch (FileNotFoundException e) {
+				System.out.println("Fichero inexistente: "+fich);
+				System.exit(-1);
+		  }
+		  while (entrada.hasNextLine()) {
+				String[] campos = entrada.nextLine().split("\\*");
+				PI.put(campos[1],new PropiedadInmobiliaria(campos[0],campos[2],campos[3],campos[4],
+						fecha(campos[3]),Integer.parseInt(campos[0].substring(0,8))));
+		  }
+		  entrada.close();
+	 }
+	
+	public static String menu () {
+        System.out.println ("\nIntroduzca una opcion:\n"+"(1) Ordenar por referencia catastral\n"+"(2) Ordenar por dni y fecha de compra\n"
+	+"(3) Buscar por referencia catastral\n"+"(4) Buscar por DNI\n"+"(5) Fin del programa");
+		Scanner entradaEscaner = new Scanner (System.in);
+        return entradaEscaner.nextLine ();
+    }
+	
+	public static long fecha(String dato) {
+		String[] fechaD=dato.replace(" ","").split("/");
+		Calendar fecha = new GregorianCalendar();
+		fecha.set(Integer.parseInt(fechaD[2]),Integer.parseInt(fechaD[1])-1,Integer.parseInt(fechaD[0]));
+		return fecha.getTimeInMillis();
+	}
+
+}
